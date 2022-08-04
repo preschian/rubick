@@ -23,6 +23,7 @@ jobs:
           sqd auth -k ${{ secrets.DEPLOYMENT_KEY }}
       - name: deploy subsquid
         id: deploySubsquid
+        continue-on-error: true
         run: sqd squid release test-rubick@${{ env.VERSION }} -v
       - name: update subsquid
         if: failure() && steps.deploySubsquid.outcome == 'failure'
