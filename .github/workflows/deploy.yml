@@ -28,6 +28,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     if: steps.deploySubsquid.outcome == 'failure'
+    needs: deploy
     steps:
       - name: update subsquid
         run: sqd squid update test-rubick@${{ env.VERSION }} -v
