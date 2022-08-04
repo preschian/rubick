@@ -22,11 +22,13 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           sqd auth -k ${{ secrets.DEPLOYMENT_KEY }}
       - name: deploy subsquid
+        id: deploy
         continue-on-error: true
         run: sqd squid release test-rubick@${{ env.VERSION }} -v
-  update:
-    runs-on: ubuntu-latest
-    needs: deploy
-    steps:
-      - name: update subsquid
-        run: sqd squid update test-rubick@${{ env.VERSION }} -v
+      - run: echo "steps.build.deploy.exit_code"
+  # update:
+  #   runs-on: ubuntu-latest
+  #   needs: deploy
+  #   steps:
+  #     - name: update subsquid
+  #       run: sqd squid update test-rubick@${{ env.VERSION }} -v
