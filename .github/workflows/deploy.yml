@@ -7,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: always()
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -23,8 +24,10 @@ jobs:
           sqd auth -k ${{ secrets.DEPLOYMENT_KEY }}
       - name: deploy subsquid
         id: deploySubsquid
-        if: always()
         run: sqd squid release test-rubick@${{ env.VERSION }} -v
+  update:
+    runs-on: ubuntu-latest
+    steps:
       - name: update subsquid
         if: failure() && steps.deploySubsquid.outcome == 'failure'
         run: sqd squid update test-rubick@${{ env.VERSION }} -v
