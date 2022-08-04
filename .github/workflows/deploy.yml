@@ -19,6 +19,7 @@ jobs:
           BRANCH=${{ github.ref_name }}
           PREFIX="release-"
           VERSION=${BRANCH/#$PREFIX}
+          echo "::set-output name=VERSION::$VERSION"
       - name: auth subsquid
         run: sqd auth -k ${{ secrets.DEPLOYMENT_KEY }}
       - name: deploy subsquid
