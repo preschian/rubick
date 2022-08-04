@@ -14,10 +14,12 @@ jobs:
           node-version: 16
       - name: install @subsquid/cli
         run: npm install --location=global @subsquid/cli
-      - name: deploy or update subsquid
+      - name: get version
         run: |
           BRANCH=${{ github.ref_name }}
           PREFIX="release-"
           VERSION=${BRANCH/#$PREFIX}
-          sqd auth -k ${{ secrets.DEPLOYMENT_KEY }}
-          sqd squid release test-rubick@$VERSION -v
+      - name: auth subsquid
+        run: sqd auth -k ${{ secrets.DEPLOYMENT_KEY }}
+      - name: deploy subsquid
+        run: sqd squid release test-rubick@$VERSION -v
