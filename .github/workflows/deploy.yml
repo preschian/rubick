@@ -26,7 +26,7 @@ jobs:
         continue-on-error: true
         run: sqd squid release test-rubick@${{ env.VERSION }} -v
       - run: echo "update"
-        if: steps.deploy.outputs.exit_code == 1
+        if: steps.deploy.outputs.exit_code == 0
   # update:
   #   runs-on: ubuntu-latest
   #   needs: deploy
